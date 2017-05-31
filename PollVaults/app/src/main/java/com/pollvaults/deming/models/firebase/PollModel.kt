@@ -4,11 +4,14 @@ import com.google.firebase.database.DataSnapshot
 
 class PollModel : FirebaseModel()
 {
-	companion object
+	lateinit var title: String
+	var options = hashMapOf<String, OptionModel>()
+
+	companion object: FirebaseModel.Creatable<PollModel>
 	{
 		val collectionRef = "polls"
 
-		fun FromSnapshot(snapshot: DataSnapshot): PollModel
+		override fun FromSnapshot(snapshot: DataSnapshot): PollModel
 		{
 			val model = snapshot.getValue(PollModel::class.java)
 			model.key = snapshot.key
@@ -16,8 +19,4 @@ class PollModel : FirebaseModel()
 			return model
 		}
 	}
-
-	lateinit var title: String
-	var options = hashMapOf<String, OptionModel>()
-	var responses = hashMapOf<String, ResponseModel>()
 }
