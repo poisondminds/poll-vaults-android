@@ -2,8 +2,8 @@ package com.pollvaults.deming.models.firebase
 
 class PollResponseModel: HashMap<String, ResponseModel>()
 {
-	companion object
+	companion object: Queryable
 	{
-		val collectionRef = "pollResponses"
+		override val collectionRef = "pollResponses"
 	}
 }

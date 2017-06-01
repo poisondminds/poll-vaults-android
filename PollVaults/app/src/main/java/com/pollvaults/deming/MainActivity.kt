@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 			{
 				if (snapshot != null)
 				{
-					val poll = PollModel.FromSnapshot(snapshot)
+					val poll: PollModel = FirebaseModel.FromSnapshot(snapshot)
 
 					titleTextView.setText(poll.title)
 

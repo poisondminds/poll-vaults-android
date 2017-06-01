@@ -6,10 +6,20 @@ abstract class FirebaseModel
 {
 	lateinit var key: String
 
-	interface Creatable<T>
+	companion object
 	{
-		fun FromSnapshot(snapshot: DataSnapshot): T
+		inline fun <reified T : FirebaseModel> FromSnapshot(snapshot: DataSnapshot): T
+		{
+			val model = snapshot.getValue(T::class.java)
+			model.key = snapshot.key
+			return model
+		}
 	}
+}
+
+interface Queryable
+{
+	val collectionRef: String
 }
 
 fun <T: FirebaseModel> HashMap<String, T>.valueList(): List<T>
