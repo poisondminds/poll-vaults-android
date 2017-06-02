@@ -54,13 +54,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 			{
 				if (snapshot != null)
 				{
-					val poll: PollModel = FirebaseModel.FromSnapshot(snapshot)
+					val poll: PollModel = snapshot.toFirebaseModel()
 
 					titleTextView.setText(poll.title)
 
 					val barWidth = barLayout.measuredWidth / (poll.options.size + 1)
-
-
 
 					val maxHeight = barLayout.measuredHeight
 					val maxVotes = poll.options.valueList().maxBy { it.voteCount }?.voteCount ?: 0
@@ -107,8 +105,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 						barView.setBackgroundColor(it.colorInt)
 
 						barLayout.addView(barView)
-
-
 						barView.requestLayout()
 					}
 				}

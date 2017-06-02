@@ -5,22 +5,15 @@ import com.google.firebase.database.DataSnapshot
 abstract class FirebaseModel
 {
 	lateinit var key: String
-
-	companion object
-	{
-		inline fun <reified T : FirebaseModel> FromSnapshot(snapshot: DataSnapshot): T
-		{
-			val model = snapshot.getValue(T::class.java)
-			model.key = snapshot.key
-			return model
-		}
-	}
 }
 
 interface Queryable
 {
 	val collectionRef: String
 }
+
+inline fun <reified T : FirebaseModel> DataSnapshot.toFirebaseModel() =
+		this.getValue(T::class.java).also { it.key = this.key}
 
 fun <T: FirebaseModel> HashMap<String, T>.valueList(): List<T>
 {
