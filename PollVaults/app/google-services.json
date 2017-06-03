@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "667136962930",
+    "firebase_url": "https://poll-vaults.firebaseio.com",
+    "project_id": "poll-vaults",
+    "storage_bucket": "poll-vaults.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:667136962930:android:8dd0ed8eec40de2e",
+        "android_client_info": {
+          "package_name": "com.pollvaults.deming"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "667136962930-o0os8amer77qvelrnpi613reqbofs4ff.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHnHKiCxtCA0v7i5aBqyhLH2zkmC75xOE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
