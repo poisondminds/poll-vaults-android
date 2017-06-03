@@ -15,6 +15,11 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.DataSet
 import com.google.firebase.database.*
 import com.pollvaults.deming.models.firebase.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -63,7 +68,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 					val maxHeight = barLayout.measuredHeight
 					val maxVotes = poll.options.valueList().maxBy { it.voteCount }?.voteCount ?: 0
 
+					var i = 1
+
+					val entryList = ArrayList<BarEntry>()
+
 					poll.options.valueList().forEach {
+
+						val entry = BarEntry(i++.toFloat(), it.voteCount.toFloat())
+						entryList.add(entry)
 
 						val barView = View(this@MainActivity)
 
@@ -107,6 +119,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 						barLayout.addView(barView)
 						barView.requestLayout()
 					}
+
+					val barData = BarDataSet(entryList, "Something")
+					val barData2 = BarData(barData)
+					barData2.barWidth = 0.9F
+
+					barChart.data = barData2
 				}
 			}
 
