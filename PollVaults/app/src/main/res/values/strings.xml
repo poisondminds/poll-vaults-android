@@ -5,4 +5,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="trending">Trending</string>
+    <string name="browse">Browse</string>
+    <string name="explore">Explore</string>
+    <string name="search">Search</string>
+    <string name="you">You</string>
+    <string name="profile">Profile</string>
 </resources>
