@@ -4,10 +4,10 @@ import android.graphics.Color
 
 class OptionModel : FirebaseModel()
 {
-	lateinit var text: String
 	lateinit var color: String
 	lateinit var icon: String
-	var voteCount: Int = 0
+	var responseCount: Int = 0
+	lateinit var text: String
 
 	val colorInt: Int get()
 	{
