@@ -2,62 +2,50 @@ package com.pollvaults.deming.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.pollvaults.deming.R
+import com.pollvaults.deming.adapters.PollAdapter
 import com.pollvaults.deming.models.firebase.PollModel
 import com.pollvaults.deming.models.firebase.toFirebaseModel
-import com.pollvaults.deming.models.firebase.valueList
-import kotlinx.android.synthetic.main.fragment_trending.*
 
 class TrendingFragment : Fragment()
 {
-
-	override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View?
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
 	{
-		val pollRef = FirebaseDatabase.getInstance().getReference(PollModel.collectionRef).child("one")
+		val v = inflater.inflate(R.layout.fragment_trending, container, false)
+		val polls = ArrayList<PollModel>()
+		val pollsRecyclerView: RecyclerView = v.findViewById(R.id.pollsRecyclerView) as RecyclerView // TOOD: no more
 
-		pollRef.addValueEventListener(object : ValueEventListener
+		val ref = FirebaseDatabase.getInstance().getReference("polls").addListenerForSingleValueEvent(object: ValueEventListener
 		{
-
-			override fun onCancelled(error: DatabaseError?)
+			override fun onCancelled(p0: DatabaseError?)
 			{
 				TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 			}
 
-			override fun onDataChange(snapshot: DataSnapshot?)
+			override fun onDataChange(snapshot: DataSnapshot)
 			{
-				if (snapshot != null)
-				{
-					val poll: PollModel = snapshot.toFirebaseModel()
+				snapshot.children.forEach { polls.add(it.toFirebaseModel()) }
 
-					val entryList = ArrayList<BarEntry>()
+				val adapter = PollAdapter(polls)
 
-					poll.options.valueList().forEachIndexed { index, optionModel ->
-
-						val entry = BarEntry(index+1.toFloat(), optionModel.voteCount.toFloat())
-						entryList.add(entry)
-					}
-
-					val barData = BarDataSet(entryList, "Something")
-					val barData2 = BarData(barData)
-					barData2.barWidth = 0.9F
-
-					barChart.data = barData2
-					barChart.invalidate()
-				}
+				pollsRecyclerView.adapter = adapter
+				pollsRecyclerView.layoutManager = LinearLayoutManager(activity)
 			}
 
 		})
 
-		return inflater?.inflate(R.layout.fragment_trending, container, false)
+
+
+
+		return v
 	}
 }
